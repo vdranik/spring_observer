@@ -20,7 +20,6 @@ public class Publisher implements PublisherInterface {
 	@Override
 	public void removeListener(PublisherActionListener listener) {
 		listeners.remove(listener);
-
 	}
 
 	@Override
