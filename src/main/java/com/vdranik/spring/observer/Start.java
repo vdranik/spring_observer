@@ -42,9 +42,6 @@ public class Start {
 		System.out.println("======================================================================================");
 
 		ConcreteObserver concreteObserver3 = context.getBean("concreteObserver", ConcreteObserver.class);
-		// List<Observer> concreteObservers_SECOND_LIST = new ArrayList<Observer>();
-		// concreteObservers_SECOND_LIST.add(concreteObserver3);
-		// subject.setObservers(concreteObservers_SECOND_LIST);
 		subject.addObserver(concreteObserver3);
 		subject.notifyObservers("Spring!");
 	}
