@@ -4,11 +4,13 @@ public class Subject {
 	private String message;
 
 	public Subject() {
+        //local code review (vtegza): no need to call super() @ 01.03.15
 		super();
 	}
 
 	public Subject(String message) {
-		super();
+        //local code review (vtegza): no need to call super() @ 01.03.15
+        super();
 		this.message = message;
 	}
 
