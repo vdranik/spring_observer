@@ -6,9 +6,10 @@
 	<bean id="concreteSubject" class="com.vdranik.spring.observer.ConcreteSubject" init-method="init" destroy-method="destroy">
 		<property name="observers">
 			<list value-type="com.vdranik.spring.observer.Observer" >	
-<!-- 		   	 	<ref bean="concreteObserver"/> -->
-<!--            	<ref bean="concreteObserver"/> -->
-<!--             	<ref bean="concreteObserver"/> -->
+				<null/>
+				<!-- <ref bean="concreteObserver"/> -->
+				<!-- <ref bean="concreteObserver"/> -->
+				<!-- <ref bean="concreteObserver"/> -->
 			</list>
 		</property>
 	</bean>

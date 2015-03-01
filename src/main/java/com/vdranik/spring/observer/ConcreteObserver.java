@@ -10,10 +10,6 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ConcreteObserver implements Observer, ApplicationContextAware, BeanNameAware, BeanFactoryAware, InitializingBean {
 
-	private BeanFactory beanFactory;
-	private ApplicationContext applicationContext;
-	private String name;
-
 	public ConcreteObserver() {
 		System.out.println("create ConcreteObserver");
 	}
@@ -39,18 +35,15 @@ public class ConcreteObserver implements Observer, ApplicationContextAware, Bean
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		System.out.println(this + " BEAN FACTORY - " + beanFactory);
-		this.beanFactory = beanFactory;
 	}
 
 	@Override
 	public void setBeanName(String name) {
 		System.out.println(this + " bean name " + name);
-		this.name = name;
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		System.out.println(this + " applicationContext " + applicationContext);
-		this.applicationContext = applicationContext;
 	}
 }

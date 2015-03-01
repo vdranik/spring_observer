@@ -12,8 +12,7 @@ public class Start {
 
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");// ("beanRefContext.xml");
-		// получение бина из beanRefContext
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");// ("beanRefContext.xml"); получение бина из beanRefContext
 		context.registerShutdownHook();
 		Subject subject = context.getBean(ConcreteSubject.class);
 		// String message = new String("Hello Spring!");
@@ -43,9 +42,10 @@ public class Start {
 		System.out.println("======================================================================================");
 
 		ConcreteObserver concreteObserver3 = context.getBean("concreteObserver", ConcreteObserver.class);
-		List<Observer> concreteObservers_SECOND_LIST = new ArrayList<Observer>();
-		concreteObservers_SECOND_LIST.add(concreteObserver3);
-		subject.setObservers(concreteObservers_SECOND_LIST);
+		// List<Observer> concreteObservers_SECOND_LIST = new ArrayList<Observer>();
+		// concreteObservers_SECOND_LIST.add(concreteObserver3);
+		// subject.setObservers(concreteObservers_SECOND_LIST);
+		subject.addObserver(concreteObserver3);
 		subject.notifyObservers("Spring!");
 	}
 }

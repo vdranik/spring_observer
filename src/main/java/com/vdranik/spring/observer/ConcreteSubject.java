@@ -13,10 +13,6 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ConcreteSubject implements Subject, ApplicationContextAware, BeanNameAware, BeanFactoryAware, InitializingBean {
 
-	private BeanFactory beanFactory;
-	private ApplicationContext applicationContext;
-	private String name;
-
 	private List<Observer> observers = new ArrayList<Observer>();
 
 	public ConcreteSubject() {
@@ -24,13 +20,18 @@ public class ConcreteSubject implements Subject, ApplicationContextAware, BeanNa
 	}
 
 	@Override
-	public List<Observer> getListeners() {
+	public List<Observer> getObservers() {
 		return observers;
 	}
 
 	@Override
-	public void setObservers(List<Observer> listeners) {
-		this.observers = listeners;
+	public void setObservers(List<Observer> observers) {
+		this.observers = observers;
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		this.observers.add(observer);
 	}
 
 	@Override
@@ -40,12 +41,12 @@ public class ConcreteSubject implements Subject, ApplicationContextAware, BeanNa
 
 	@Override
 	public void removeAllObservers() {
-		getListeners().clear();
+		getObservers().clear();
 	}
 
 	@Override
 	public void notifyObservers(String message) {
-		for (Observer observer : getListeners()) {
+		for (Observer observer : getObservers()) {
 			observer.notify(message);
 		}
 	}
@@ -66,18 +67,15 @@ public class ConcreteSubject implements Subject, ApplicationContextAware, BeanNa
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		System.out.println(this + " BEAN FACTORY - " + beanFactory);
-		this.beanFactory = beanFactory;
 	}
 
 	@Override
 	public void setBeanName(String name) {
 		System.out.println(this + " bean name " + name);
-		this.name = name;
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		System.out.println(this + " applicationContext " + applicationContext);
-		this.applicationContext = applicationContext;
 	}
 }
