@@ -3,17 +3,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="publisher" class="com.vdranik.spring.observer.Publisher">
-		<property name="listeners">
-			<list value-type="com.vdranik.spring.observer.PublisherActionListener">
-		   	 	<ref bean="listener"/>
-           	    <ref bean="listener"/>
-            	<ref bean="listener"/>
+	<bean id="concreteSubject" class="com.vdranik.spring.observer.ConcreteSubject" init-method="init" destroy-method="destroy">
+		<property name="observers">
+			<list value-type="com.vdranik.spring.observer.Observer" >	
+<!-- 		   	 	<ref bean="concreteObserver"/> -->
+<!--            	<ref bean="concreteObserver"/> -->
+<!--             	<ref bean="concreteObserver"/> -->
 			</list>
 		</property>
 	</bean>
 
-	<bean id="listener" class="com.vdranik.spring.observer.Listener">
+	<bean id="concreteObserver" class="com.vdranik.spring.observer.ConcreteObserver" init-method="init" destroy-method="destroy" lazy-init="true" scope="prototype">
 	</bean>
+	
+	<bean class="com.vdranik.spring.observer.MyBeanPostProcessor"></bean>
 	
 </beans>

@@ -1,16 +1,51 @@
 package com.vdranik.spring.observer;
 
-import org.springframework.context.ApplicationContext;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Start {
 
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
-		ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
-		Publisher publisher = context.getBean(Publisher.class);
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");// ("beanRefContext.xml");
+		// получение бина из beanRefContext
+		context.registerShutdownHook();
+		Subject subject = context.getBean(ConcreteSubject.class);
+		// String message = new String("Hello Spring!");
+		// subject.notifyObservers(message);
 
-		Subject subject = new Subject("Hello Spring!");
-		publisher.notifyAllListeners(subject);
+		// создание бина через java bean definition
+		DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) context.getBeanFactory();
+		GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+		beanDefinition.setInitMethodName("init");
+		beanDefinition.setDestroyMethodName("destroy");
+		beanDefinition.setBeanClass(ConcreteObserver.class);
+		beanDefinition.setLazyInit(true);
+		beanDefinition.setAbstract(false);
+		beanDefinition.setAutowireCandidate(true);
+		beanDefinition.setScope("prototype");
+		beanFactory.registerBeanDefinition("concreteObserver", (BeanDefinition) beanDefinition);
+
+		ConcreteObserver concreteObserver1 = context.getBean("concreteObserver", ConcreteObserver.class);
+		ConcreteObserver concreteObserver2 = context.getBean("concreteObserver", ConcreteObserver.class);
+
+		List<Observer> concreteObservers_FIRST_LIST = new ArrayList<Observer>();
+		concreteObservers_FIRST_LIST.add(concreteObserver1);
+		concreteObservers_FIRST_LIST.add(concreteObserver2);
+		subject.setObservers(concreteObservers_FIRST_LIST);
+		subject.notifyObservers("Hello");
+		subject.removeAllObservers();
+		System.out.println("======================================================================================");
+
+		ConcreteObserver concreteObserver3 = context.getBean("concreteObserver", ConcreteObserver.class);
+		List<Observer> concreteObservers_SECOND_LIST = new ArrayList<Observer>();
+		concreteObservers_SECOND_LIST.add(concreteObserver3);
+		subject.setObservers(concreteObservers_SECOND_LIST);
+		subject.notifyObservers("Spring!");
 	}
 }

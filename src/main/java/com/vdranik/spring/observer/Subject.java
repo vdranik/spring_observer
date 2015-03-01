@@ -1,22 +1,16 @@
 package com.vdranik.spring.observer;
-public class Subject {
 
-	private String message;
+import java.util.List;
 
-	public Subject() {
-		super();
-	}
+public interface Subject {
 
-	public Subject(String message) {
-		super();
-		this.message = message;
-	}
+	List<Observer> getListeners();
 
-	public String getMessage() {
-		return message;
-	}
+	void setObservers(List<Observer> observers);
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+	public void removeObserver(Observer listener);
+
+	public void removeAllObservers();
+
+	public void notifyObservers(String message);
 }
