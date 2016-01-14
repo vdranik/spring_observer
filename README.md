@@ -1,3 +1,3 @@
-# spring_observer
+# Spring Observer.
 Spring Observer.
 Training priject.
